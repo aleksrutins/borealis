@@ -1,0 +1,6 @@
+data/com.rutins.Borealis.desktop.in
+data/com.rutins.Borealis.appdata.xml.in
+data/com.rutins.Borealis.gschema.xml
+src/main.c
+src/borealis-window.c
+src/borealis-window.ui
