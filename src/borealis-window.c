@@ -32,16 +32,17 @@ struct _BorealisWindow
 	AdwApplicationWindow  parent_instance;
 
 	/* Template widgets */
-	GtkHeaderBar        *header_bar;
 };
 
 G_DEFINE_FINAL_TYPE (BorealisWindow, borealis_window, ADW_TYPE_APPLICATION_WINDOW)
 
 static GFile *
-get_bg_file(BorealisWindow *self) {
+get_bg_file(BorealisWindow *self, GtkPicture *picture) {
         g_autoptr (GSettings) bg_settings = g_settings_new ("org.gnome.desktop.background");
         char                 *bg = g_settings_get_string (bg_settings, "picture-uri-dark");
-        return g_file_new_for_uri (bg);
+        GFile *file = g_file_new_for_uri (bg);
+        gtk_picture_set_file (picture, file);
+        return file;
 }
 
 static void
@@ -50,7 +51,6 @@ borealis_window_class_init (BorealisWindowClass *klass)
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
 	gtk_widget_class_set_template_from_resource (widget_class, "/com/rutins/Borealis/borealis-window.ui");
-	gtk_widget_class_bind_template_child (widget_class, BorealisWindow, header_bar);
         gtk_widget_class_bind_template_callback (widget_class, get_bg_file);
 }
 
